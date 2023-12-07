@@ -13,3 +13,11 @@ class Transaccion(models.Model):
     
     def __str__(self):
         return self.descripcion
+
+class Usuario(models.Model):
+    nombre = models.CharField(max_length=20, blank=False)
+    usuario = models.CharField(max_length=20, blank=False, primary_key=True)
+    clave = models.CharField(max_length=20, blank=False)
+
+    def __str__(self):
+        return (self.usuario)
