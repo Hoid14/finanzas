@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import {getAllTransacciones} from '../api/transacciones.api'
+import {TransaccionCard} from './TransaccionCard'
 export function Transaccioneslist() {
     const [transacciones,setTransacciones] = useState([])
 
@@ -17,11 +18,7 @@ export function Transaccioneslist() {
     return (
         <div>
             {transacciones.map(transaccion=>(
-                <div>
-                    <h1>{transaccion.tipo}</h1>
-                    <p>{transaccion.descripcion}</p>
-                    <p>{transaccion.monto}</p>
-                </div>
+                <TransaccionCard key ={transaccion.id} transaccion={transaccion} />
             ))}
         </div>
         
