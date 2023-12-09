@@ -140,4 +140,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # cors authorization
 CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'https://Hoid14.github.io/finanzas']
-CORS_ALLOW_CREDENTIALS = True
