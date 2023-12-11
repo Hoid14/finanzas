@@ -1,4 +1,8 @@
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions,status
+from rest_framework.response import Response
+from rest_framework.decorators import action
+from django.contrib.auth import authenticate, login, logout
+from django.db import IntegrityError
 
 from .models import Transaccion
 from .models import Usuario
@@ -14,6 +18,10 @@ class TransaccionViewSet(viewsets.ModelViewSet):
 
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()
-    permission_classes = [permissions.AllowAny] # Cualquier aplicacion cliente va a poder pedirle datos a mi servidor
     serializer_class = UsuarioSerializer
+     
+        
+            
+
+
 
