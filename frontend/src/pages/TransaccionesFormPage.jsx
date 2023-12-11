@@ -1,19 +1,43 @@
+import { useEffect } from 'react'
 import {useForm} from 'react-hook-form'
-import {createTransaccion,deleteTransaccion} from '../api/transacciones.api'
+import {createTransaccion,deleteTransaccion, updateTransaccion, getTransaccion} from '../api/transacciones.api'
 import {useNavigate, useParams} from 'react-router-dom'
 export function TransaccionesFormPage(){
     
-    const {register, handleSubmit, formState: {errors}} = useForm()
+    const {
+        register, 
+        handleSubmit, 
+        formState: {errors},
+        setValue //Me permite ponerle valores al formulario
+    } = useForm()
 
     const navigate = useNavigate()
     const params = useParams() // Extrae los parametros de la URL como un objeto JSON(en este caso solo tiene una propiedad "id"), es decir, los marcadores de posicion con dos puntos de App.js
-    console.log(params)
+    
 
     const onSubmit = handleSubmit(async data => { //Cuando se ejecuta handlesubmit, me va a dar datos
-       await createTransaccion(data) // data es el formulario que se envia
+       if (params.id) {
+        await updateTransaccion(params.id, data)
+       }
+       else{
+        await createTransaccion(data) // data es el formulario que se envia
+       }
        navigate('/transacciones') //despues de enviar el formulario, redirecciona hacia transacciones
+        
     })
 
+    useEffect(() => {
+        async function loadTransaccion () {
+            if (params.id) {
+                const res = await getTransaccion(params.id)
+                setValue('descripcion', res.data.descripcion)
+                setValue('monto', res.data.monto)
+                setValue('tipo', res.data.tipo)
+            }
+        }
+        loadTransaccion()
+    }, [])
+    
     return(
         <div>
 
