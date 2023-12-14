@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import {useForm} from 'react-hook-form'
+import { useEffect, useState } from 'react'
+import {get, useForm} from 'react-hook-form'
 import {getAllUsuarios} from '../api/usuarios.api'
 import {useNavigate, useParams} from 'react-router-dom'
 import {toast} from 'react-hot-toast'
@@ -11,20 +11,36 @@ export function LoginFormPage(){
         setValue //Me permite ponerle valores al formulario
     } = useForm()
     //Establecemos variables de usuario
+    const [listaUsuarios, setListaUsuarios] = useState([])
+    useEffect(() => { async function getUsuarios() {
+        const lista = await getAllUsuarios()
+        setListaUsuarios(lista.data)
+    }
+    getUsuarios()
     
+    },[])
     const navigate = useNavigate()
     const params = useParams()
-    const onSubmit = handleSubmit( async data => { //Cuando se ejecuta handlesubmit, me va a dar datos
-        
-        const res = await getAllUsuarios();
-        console.log(res)
-        // navigate()
-        
+    const login = handleSubmit( async data => { //Cuando se ejecuta handlesubmit, me va a dar datos
+        let usuarioDetectado = listaUsuarios.find(function(usuario){
+            return usuario.usuario === data.usuario && usuario.clave === data.clave
         })
+
+        if (usuarioDetectado) {
+            navigate(`/${usuarioDetectado.usuario}/transacciones`)
+            
+        }else{
+            toast.error("no encontrado")
+        }
+        })
+        
+        
+        
+    
         
     return(
         <div>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={login}>
                 <input type="text" 
                 placeholder="Usuario" 
                 {...register("usuario", 

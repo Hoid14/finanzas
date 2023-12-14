@@ -24,9 +24,11 @@ function App() {
           <Route path='/' element={<Navigate to='/transacciones' />} /> {/*Esta es la ruta inicial que se muestra, esto me envia a la ruta transacciones*/}
           <Route path='/register' element={<RegisterFormPage/>} />
           <Route path='/login' element={<LoginFormPage/>} />
+          <Route path="/:user/transacciones" element = {<TransaccionesPage/>} />
           <Route path="/transacciones" element = {<TransaccionesPage/>} />
           <Route path="/transacciones-create" element = {<TransaccionesFormPage/>} />
           <Route path="/transacciones/:id" element = {<TransaccionesFormPage/>} /> {/*:id = alli va a ir un valor dinamico, los dos puntos representan un marcador de posicion que identifica ese parametro*/}
+          
         </Routes>
         <Toaster/>
       </div>
