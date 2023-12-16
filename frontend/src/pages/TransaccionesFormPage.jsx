@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 import {useForm} from 'react-hook-form'
 import {createTransaccion,deleteTransaccion, updateTransaccion, getTransaccion} from '../api/transacciones.api'
-import {useNavigate, useParams} from 'react-router-dom'
+import {Link, useNavigate, useParams} from 'react-router-dom'
 import {toast} from 'react-hot-toast'
+
+
 export function TransaccionesFormPage(){
     
     const {
@@ -82,7 +84,24 @@ export function TransaccionesFormPage(){
     }, [])
     
     return(
-        <div className='max-w-xl mx-auto'>
+        <div>
+            <div className='flex flex-col py-3'>
+                <div className='flex justify-between'>
+                    <div>
+                        {params.user}
+                        <Link to={`/${params.user}/transacciones`}>
+                            <h1 className='font-bold text-3xl mb-4'>Transaccion App</h1>
+                        </Link>
+                    </div>
+                    <div>
+                        <button className='bg-gray-800 hover:bg-gray-600 text-white font-bold px-3 py-2 rounded-lg'>
+                            <Link to="/">Cerrar sesion</Link>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div className='max-w-xl mx-auto'>
 
             <form onSubmit={onSubmit}>
                 <input type="text" 
@@ -112,7 +131,7 @@ export function TransaccionesFormPage(){
                     <option value="Ingreso">Ingreso</option>
                 </select>
                 {errors.tipo && <span>Tipo es requerido</span>}
-               
+            
                 <button
                 className='bg-gray-800 hover:bg-gray-600 text-white font-bold px-3 py-2 rounded-lg'
                 >Save</button>
@@ -143,6 +162,8 @@ export function TransaccionesFormPage(){
                 </button> // Si params.id existe, entonces muestrame ese boton
             }
 
+            </div>
         </div>
+        
     )
 }

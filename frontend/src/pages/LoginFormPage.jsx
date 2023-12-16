@@ -28,7 +28,6 @@ export function LoginFormPage(){
 
         if (usuarioDetectado) {
             navigate(`/${usuarioDetectado.usuario}/transacciones`)
-            
         }else{
             toast.error("no encontrado")
         }

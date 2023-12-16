@@ -1,5 +1,5 @@
 import {useNavigate} from 'react-router-dom'
-export function TransaccionCard( {transaccion}) {
+export function TransaccionCard( {transaccion,user}) {
     
     const navigate = useNavigate()
 
@@ -9,7 +9,7 @@ export function TransaccionCard( {transaccion}) {
         className='bg-blue-500 p-3 hover:bg-blue-700 hover:cursor-pointer'
         
         onClick={()=>{//Al dar un click a esta tarjeta, navegara hacia esa tarjeta
-            navigate(`/transacciones/${transaccion.id}`)
+            navigate(`/${user}/transacciones/${transaccion.id}`)
         }}
         >
             <h1 className='font-bold uppercase'>{transaccion.descripcion}</h1>

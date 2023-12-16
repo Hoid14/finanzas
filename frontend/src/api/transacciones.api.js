@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const transaccionesApi = axios.create({
     baseURL: 'https://transacciones-2lp8.onrender.com/api/Transacciones/'
+    //baseURL: 'http://127.0.0.1:8000/api/Transacciones/'
 }
 )
 export const getAllTransacciones = () => transaccionesApi.get('/')
