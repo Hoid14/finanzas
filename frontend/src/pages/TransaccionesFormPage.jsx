@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import {useForm} from 'react-hook-form'
 import {createTransaccion,deleteTransaccion, updateTransaccion, getTransaccion} from '../api/transacciones.api'
-import {Link, useNavigate, useParams} from 'react-router-dom'
+import {Link, useNavigate, useParams,useLocation} from 'react-router-dom'
 import {toast} from 'react-hot-toast'
-
+import {AuthProvider} from '../context/AuthProvider'
 
 export function TransaccionesFormPage(){
     
@@ -17,6 +17,7 @@ export function TransaccionesFormPage(){
 
     const navigate = useNavigate()
     const params = useParams() // Extrae los parametros de la URL como un objeto JSON(en este caso solo tiene una propiedad "id"), es decir, los marcadores de posicion con dos puntos de App.js
+
     
 
     const onSubmit = handleSubmit(async data => { //Cuando se ejecuta handlesubmit, me va a dar datos
@@ -79,27 +80,17 @@ export function TransaccionesFormPage(){
                 setValue('monto', res.data.monto)
                 setValue('tipo', res.data.tipo)
             }
+            else {
+                setValue('descripcion',)
+                setValue('monto',)
+                setValue('tipo',)
+            }
         }
         loadTransaccion()
-    }, [])
+    }, [params.id, setValue])
     
     return(
         <div>
-            <div className='flex flex-col py-3'>
-                <div className='flex justify-between'>
-                    <div>
-                        {params.user}
-                        <Link to={`/${params.user}/transacciones`}>
-                            <h1 className='font-bold text-3xl mb-4'>Transaccion App</h1>
-                        </Link>
-                    </div>
-                    <div>
-                        <button className='bg-gray-800 hover:bg-gray-600 text-white font-bold px-3 py-2 rounded-lg'>
-                            <Link to="/">Cerrar sesion</Link>
-                        </button>
-                    </div>
-                </div>
-            </div>
 
             <div className='max-w-xl mx-auto'>
 

@@ -3,6 +3,7 @@ import {get, useForm} from 'react-hook-form'
 import {getAllUsuarios} from '../api/usuarios.api'
 import {useNavigate, useParams} from 'react-router-dom'
 import {toast} from 'react-hot-toast'
+import {AuthProvider, useAuth} from '../context/AuthProvider'
 export function LoginFormPage(){
     const {
         register, 
@@ -19,6 +20,8 @@ export function LoginFormPage(){
     getUsuarios()
     
     },[])
+
+    const { loginAuth } = useAuth()
     const navigate = useNavigate()
     const params = useParams()
     const login = handleSubmit( async data => { //Cuando se ejecuta handlesubmit, me va a dar datos
@@ -27,6 +30,7 @@ export function LoginFormPage(){
         })
 
         if (usuarioDetectado) {
+            loginAuth(usuarioDetectado)
             navigate(`/${usuarioDetectado.usuario}/transacciones`)
         }else{
             toast.error("no encontrado")
