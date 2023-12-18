@@ -3,7 +3,7 @@ import {useForm} from 'react-hook-form'
 import {createTransaccion,deleteTransaccion, updateTransaccion, getTransaccion} from '../api/transacciones.api'
 import {Link, useNavigate, useParams,useLocation} from 'react-router-dom'
 import {toast} from 'react-hot-toast'
-import {AuthProvider} from '../context/AuthProvider'
+import {useAuth} from '../context/AuthProvider'
 
 export function TransaccionesFormPage(){
     
@@ -17,83 +17,78 @@ export function TransaccionesFormPage(){
 
     const navigate = useNavigate()
     const params = useParams() // Extrae los parametros de la URL como un objeto JSON(en este caso solo tiene una propiedad "id"), es decir, los marcadores de posicion con dos puntos de App.js
-
+    const { user } = useAuth()
     
 
     const onSubmit = handleSubmit(async data => { //Cuando se ejecuta handlesubmit, me va a dar datos
-       if (params.id) {
-        await updateTransaccion(params.id, data)
-        if(data.tipo === 'Gasto') { 
-            toast.success('Gasto actualizado', {
-                position: "bottom-right",
-                style: {
-                    background: "#101010",
-                    color: "#fff"
-                }
-            }) 
+        data.usuario = user.usuario
+        if (params.id) {
+            await updateTransaccion(params.id, data)
+            if(data.tipo === 'Gasto') { 
+                toast.success('Gasto actualizado', {
+                    position: "bottom-right",
+                    style: {
+                        background: "#101010",
+                        color: "#fff"
+                    }
+                }) 
 
-        }
-        else if (data.tipo === 'Ingreso'){
-            toast.success('Ingreso actualizado', {
-                position: "bottom-right",
-                style: {
-                    background: "#101010",
-                    color: "#fff"
-                }
-            })
-        }   
-    }
-       else{
-        await createTransaccion(data) // data es el formulario que se envia
-        
-        //Ejecuta el metodo success de toast que muestra un mensaje
-        if(data.tipo === 'Gasto') { 
-            toast.success('Gasto creado', {
-                position: "bottom-right",
-                style: {
-                    background: "#101010",
-                    color: "#fff"
-                }
-            }) 
-
-        }
-        else if (data.tipo === 'Ingreso'){
-            toast.success('Ingreso creado', {
-                position: "bottom-right",
-                style: {
-                    background: "#101010",
-                    color: "#fff"
-                }
-            })
-        }
-        
-       }
-       navigate('/transacciones') //despues de enviar el formulario, redirecciona hacia transacciones
-        
-    })
-
-    useEffect(() => {
-        async function loadTransaccion () {
-            if (params.id) {
-                const res = await getTransaccion(params.id)
-                setValue('descripcion', res.data.descripcion)
-                setValue('monto', res.data.monto)
-                setValue('tipo', res.data.tipo)
             }
-            else {
-                setValue('descripcion',)
-                setValue('monto',)
-                setValue('tipo',)
-            }
+            else if (data.tipo === 'Ingreso'){
+                toast.success('Ingreso actualizado', {
+                    position: "bottom-right",
+                    style: {
+                        background: "#101010",
+                        color: "#fff"
+                    }
+                })
+            }   
         }
-        loadTransaccion()
-    }, [params.id, setValue])
+        else{
+            await createTransaccion(data) // data es el formulario que se envia
+        
+            //Ejecuta el metodo success de toast que muestra un mensaje
+            if(data.tipo === 'Gasto') { 
+                toast.success('Gasto creado', {
+                    position: "bottom-right",
+                    style: {
+                        background: "#101010",
+                        color: "#fff"
+                    }
+                }) 
+
+            }
+            else if (data.tipo === 'Ingreso'){
+                toast.success('Ingreso creado', {
+                    position: "bottom-right",
+                    style: {
+                        background: "#101010",
+                        color: "#fff"
+                    }
+                })
+            }
+        
+        }
+        navigate(`/${user.usuario}/transacciones/${"todo"}`) //despues de enviar el formulario, redirecciona hacia transacciones
+        
+        })
+
+        useEffect(() => {
+            async function loadTransaccion () {
+                if (params.id) {
+                    const res = await getTransaccion(params.id)
+                    setValue('descripcion', res.data.descripcion)
+                    setValue('monto', res.data.monto)
+                    setValue('tipo', res.data.tipo)
+                }
+            }
+            loadTransaccion()
+        }, [params.id, setValue])
     
     return(
         <div>
 
             <div className='max-w-xl mx-auto'>
-
             <form onSubmit={onSubmit}>
                 <input type="text" 
                 placeholder="Descripcion" 
@@ -144,7 +139,7 @@ export function TransaccionesFormPage(){
                                 }
                             })
 
-                        navigate('/transacciones')
+                        navigate(`/${user.usuario}/transacciones`)
                     }
                 }}
                 className='bg-gray-800 hover:bg-gray-600 text-white font-bold px-3 py-2 my-2 rounded-lg'

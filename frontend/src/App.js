@@ -30,10 +30,9 @@ function App() {
             <Route path='/inicio' element={<Inicio/>}/>
             <Route path='/register' element={<RegisterFormPage/>} />
             <Route path='/login' element={<LoginFormPage/>} />
-            <Route path="/:user/transacciones" element = {<TransaccionesPage/>} />
-            <Route path="/transacciones" element = {<TransaccionesPage/>} />
+            <Route path="/:user/transacciones/:tipo" element = {<TransaccionesPage/>} />
             <Route path="/:user/transacciones-create" element = {<TransaccionesFormPage/>} />
-            <Route path="/:user/transacciones/:id" element = {<TransaccionesFormPage/>} /> {/*:id = alli va a ir un valor dinamico, los dos puntos representan un marcador de posicion que identifica ese parametro*/}
+            <Route path="/:user/transacciones/actualizar/:id" element = {<TransaccionesFormPage/>} /> {/*:id = alli va a ir un valor dinamico, los dos puntos representan un marcador de posicion que identifica ese parametro*/}
             
           </Routes>
           

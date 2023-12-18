@@ -20,17 +20,47 @@ export function TransaccionesUserlist() {
             setTransacciones(transaccionesUser)
         }
         loadTransacciones()
-    }, [])
+    }, [params.user])
 
     return (
         <div>
-            <div>
-                <div className="grid grid-cols-3 gap-3">
-                    {transacciones.map(transaccion=>(
-                        <TransaccionCard key ={transaccion.id} transaccion={transaccion} user={params.user}/>
-                    ))}
+            {params.tipo === "todo" && (
+                <div>
+                    <p className="text-2xl font-bold text-blue-500 my-5 text-center">Gastos e ingresos</p>
+                    <div className="grid grid-cols-3 gap-3">
+                        {transacciones.map(transaccion=>(
+                            <TransaccionCard key ={transaccion.id} transaccion={transaccion} user={params.user}/>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            )}
+            {params.tipo === "gastos" && (
+                <div>
+                    <p className="text-2xl font-bold text-blue-500 my-5 text-center">Gastos</p>
+                    <div className="grid grid-cols-3 gap-3">
+                        {transacciones
+                        .filter(transaccion => transaccion.tipo === "Gasto")
+                        .map(transaccion=>(
+                            <TransaccionCard key ={transaccion.id} transaccion={transaccion} user={params.user}/>
+                            
+                        ))}
+                    </div>
+                </div>
+            )}
+            {params.tipo === "ingresos" && (
+                <div>
+                    <p className="text-2xl font-bold text-blue-500 my-5 text-center">Ingresos</p>
+                    <div className="grid grid-cols-3 gap-3">
+                        {transacciones
+                        .filter(transaccion => transaccion.tipo === "Ingreso")
+                        .map(transaccion=>(
+                            <TransaccionCard key ={transaccion.id} transaccion={transaccion} user={params.user}/>
+                            
+                        ))}
+                    </div>
+                </div>
+            )}
+            
             
 
 

@@ -8,10 +8,9 @@ export function AuthProvider ({ children }){
 
     const loginAuth = (userData) => {
         //Logica de inicio de sesion exitoso
-        if(userData){
-            setLogin(true)
-            setUser(userData)
-        }
+        setLogin(true)
+        setUser(userData)
+       
     }
 
     const logoutAuth = () => {
