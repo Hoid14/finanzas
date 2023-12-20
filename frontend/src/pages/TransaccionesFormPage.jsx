@@ -139,7 +139,7 @@ export function TransaccionesFormPage(){
                                 }
                             })
 
-                        navigate(`/${user.usuario}/transacciones`)
+                        navigate(`/${user.usuario}/transacciones/${"todo"}`)
                     }
                 }}
                 className='bg-gray-800 hover:bg-gray-600 text-white font-bold px-3 py-2 my-2 rounded-lg'
