@@ -6,8 +6,6 @@ class TransaccionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaccion
         fields = '__all__'
-        read_only_fields = ('fecha', ) # no permite actualizar
-                                       # la coma es importante
 
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:

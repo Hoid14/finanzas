@@ -79,6 +79,7 @@ export function TransaccionesFormPage(){
                     const res = await getTransaccion(params.id)
                     setValue('descripcion', res.data.descripcion)
                     setValue('monto', res.data.monto)
+                    setValue('fecha', res.data.fecha)
                     setValue('tipo', res.data.tipo)
                 }
             }
@@ -108,6 +109,13 @@ export function TransaccionesFormPage(){
                 
                 {errors.monto && <span>Monto es requerido</span>}
 
+                <input type="date"
+                placeholder="Ingrese fecha"
+                {...register("fecha", { required: true })}
+                className='w-full px-4 py-2 leading-tight text-gray-700 bg-white border border-gray-400 rounded-md shadow-md focus:outline-none focus:border-blue-500 focus:shadow-outline-blue mb-3'
+                />
+
+                {errors.fecha && <span>Fecha es requerida</span>}
 
                 <select {...register("tipo", { required: true })}
                 className='w-full px-4 py-2 leading-tight text-gray-700 bg-white border border-gray-400 rounded-md shadow-md focus:outline-none focus:border-blue-500 focus:shadow-outline-blue mb-3'

@@ -13,10 +13,7 @@ class Transaccion(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, default="hoid")
     descripcion = models.CharField(max_length=200)
     monto = models.DecimalField(max_digits=10, decimal_places=2)
-    fecha = models.DateField(auto_now_add=True) # Campo de fecha que se establece 
-                                                # automáticamente en la fecha de 
-                                                # creación del objeto.
-    
+    fecha = models.DateField() # YYYY-MM-DD"
     tipo = models.CharField(max_length=10, choices=[('Gasto', 'Gasto'), ('Ingreso', 'Ingreso')])
 
     

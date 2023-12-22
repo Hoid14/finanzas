@@ -18,7 +18,7 @@ function App() {
     <BrowserRouter basename='/finanzas'>
       <div className="container mx-auto ">
         <AuthProvider>
-          <NavigationMainPageBar/> {/*Esto crea los botones para ir hacia las rutas*/}
+          <NavigationMainPageBar /> {/*Esto crea los botones para ir hacia las rutas*/}
           <Routes>
           {/*
             Definición de ruta en React utilizando React Router.
