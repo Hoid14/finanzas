@@ -12,17 +12,9 @@ export function LoginFormPage(){
         setValue, //Me permite ponerle valores al formulario
         watch,
     } = useForm()
-    //Establecemos variables de usuario
-    const [listaUsuarios, setListaUsuarios] = useState([])
-    useEffect(() => { async function getUsuarios() {
-        const lista = await getAllUsuarios()
-        setListaUsuarios(lista.data)
-    }
-    getUsuarios()
     
-    },[])
 
-    const { loginAuth } = useAuth()
+    const { loginAuth, listaUsuarios } = useAuth()
     const navigate = useNavigate()
     const params = useParams()
     const onSubmit = handleSubmit( async data => { //Cuando se ejecuta handlesubmit, me va a dar datos

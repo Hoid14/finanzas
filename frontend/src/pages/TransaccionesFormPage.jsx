@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import {useForm} from 'react-hook-form'
 import {createTransaccion,deleteTransaccion, updateTransaccion, getTransaccion} from '../api/transacciones.api'
-import {Link, useNavigate, useParams,useLocation} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import {toast} from 'react-hot-toast'
 import {useAuth} from '../context/AuthProvider'
 
@@ -128,7 +128,8 @@ export function TransaccionesFormPage(){
             
                 <button
                 className='bg-gray-800 hover:bg-gray-600 text-white font-bold px-3 py-2 rounded-lg'
-                >Save</button>
+                >Save
+                </button>
             </form>
 
             {

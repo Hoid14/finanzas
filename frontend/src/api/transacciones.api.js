@@ -20,3 +20,7 @@ export const updateTransaccion = (id, transaccion) => transaccionesApi.put(`/${i
 export const getGraficaGastos = (usuario, tipo, year) => transaccionesApi.get(`/estadisticas/${usuario}/${tipo}/${year}/`)
 
 export const getGraficaIngresos = (usuario, tipo, year) => transaccionesApi.get(`/estadisticas/${usuario}/${tipo}/${year}/`)
+
+//balance
+//http://127.0.0.1:8000/api/Transacciones/suma/hoid/Gasto/2023/
+export const getBalance = (usuario, tipo, year) => transaccionesApi.get(`/suma/${usuario}/${tipo}/${year}/`)

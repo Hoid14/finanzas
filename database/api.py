@@ -79,7 +79,33 @@ class TransaccionViewSet(viewsets.ModelViewSet):
             graph= get_graph()
             
             return Response({'grafico': graph})
-        
+    
+    #Obtener Gastos/Ingresos anuales
+    @action(detail=False, methods=['get'], url_path='suma/(?P<usuario_consultado>\w+)/(?P<tipo>\w+)/(?P<anno>\d+)')
+    def getSumTransaccion(self, request, usuario_consultado, tipo, anno):
+        registros = Transaccion.objects.filter(tipo=tipo, usuario=usuario_consultado, fecha__year=int(anno))
+        data = registros.values()
+        df = pd.DataFrame(data)
+        suma_monto = df['monto'].sum()
+        return Response({'suma': suma_monto})
+    
+    @action(detail=False, methods=['get'], url_path='ingreso_neto/(?P<usuario_consultado>\w+)/(?P<anno>\d+)/(?P<mes>\w+)')
+    def getIngresoNetoTransaccion(self, request, usuario_consultado, anno, mes):
+        if(mes=="todo"):#tiene en cuenta todos los meses del año
+            registros = Transaccion.objects.filter( usuario=usuario_consultado, fecha__year=int(anno))
+            data = registros.values()
+            df = pd.DataFrame(data)
+            sumaGasto = df.loc[df['tipo'] == 'Gasto', 'monto'].sum()
+            sumaIngreso = df.loc[df['tipo'] == 'Ingreso', 'monto'].sum()
+            ingreso_neto = sumaIngreso-sumaGasto
+        else:#filtra por mes
+            registros = Transaccion.objects.filter( usuario=usuario_consultado, fecha__year=int(anno), fecha__month=int(mes))
+            data = registros.values()
+            df = pd.DataFrame(data)
+            sumaGasto = df.loc[df['tipo'] == 'Gasto', 'monto'].sum()
+            sumaIngreso = df.loc[df['tipo'] == 'Ingreso', 'monto'].sum()
+            ingreso_neto = sumaIngreso-sumaGasto
+        return Response({'neto': ingreso_neto})
     
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()

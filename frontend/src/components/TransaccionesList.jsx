@@ -1,19 +1,9 @@
-import { useEffect, useState } from "react"
-import {getAllTransacciones} from '../api/transacciones.api'
 import {TransaccionCard} from './TransaccionCard'
+import { useAuth } from "../context/AuthProvider"
 export function Transaccioneslist() {
-    const [transacciones,setTransacciones] = useState([])
 
-    /*Este useEffect se va a ejecutar apenas cargue la pagina */
-    useEffect(() => {
-        
-        async function loadTransacciones() {
-            const res = await getAllTransacciones()
-            console.log(res.data)
-            setTransacciones(res.data)
-        }
-        loadTransacciones()
-    }, [])
+    const {transacciones} = useAuth()
+
 
     return (
         <div className="grid grid-cols-3 gap-3">

@@ -1,9 +1,8 @@
-import { useEffect } from 'react'
+
 import {useForm} from 'react-hook-form'
 import {createUsuario} from '../api/usuarios.api'
-import {useNavigate, useParams} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-hot-toast'
-import {useAuth} from '../context/AuthProvider'
 export function RegisterFormPage(){
     const {
         register, 
@@ -13,9 +12,7 @@ export function RegisterFormPage(){
         watch, // Utilizado para observar los valores de los campos
     } = useForm()
 
-    const { loginAuth } = useAuth()
     const navigate = useNavigate()
-    const params = useParams()
     const onSubmit = handleSubmit(async data => { //Cuando se ejecuta handlesubmit, me va a dar datos
         try{
             await createUsuario(data)

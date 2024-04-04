@@ -1,6 +1,7 @@
 // Esto iba en el componente Navigation
 import {Link} from 'react-router-dom'
 import {useAuth} from '../context/AuthProvider'
+import { Balance } from './Balance'
 export function NavigationMainPageBar() {
     const {isLogin, user, logoutAuth} =useAuth()
 
@@ -45,7 +46,7 @@ export function NavigationMainPageBar() {
                             </div>
                         </div>
 
-                        <p class="text-2xl font-bold text-blue-500 mb-5 text-center">Hola {user.nombre}</p>
+                        <p className="text-2xl font-bold text-blue-500 mb-5 text-center">Hola {user.nombre}</p>
 
                         <div className='px-3 flex justify-center'>
                             <button className='bg-gray-800 hover:bg-gray-600 text-white font-bold px-3 py-2 mx-3 rounded-lg'>
@@ -61,6 +62,8 @@ export function NavigationMainPageBar() {
                                 <Link to={`/${user.usuario}/transacciones/${"estadisticas"}`}>Mostrar estadisticas</Link>
                             </button>
                         </div>
+                        <Balance/>
+
                     </div>
                     
                 )}
