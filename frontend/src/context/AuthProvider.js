@@ -1,17 +1,17 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { getAllTransacciones, getBalance } from '../api/transacciones.api'
+import { getAllTransacciones} from '../api/transacciones.api'
 import { getAllUsuarios } from '../api/usuarios.api'
+
 
 const AuthContext = createContext()
 
 export function AuthProvider ({ children }){
     const [isLogin, setLogin] = useState(false)
     const [user, setUser] =useState(null)
-    const [ingreso, setIngreso] = useState(null)
-    const [gasto, setGasto] = useState(null)
     const [transacciones,setTransacciones] = useState([])
     const [listaUsuarios, setListaUsuarios] = useState([])
-    
+
+
     //Establecemos lista de usuarios
     useEffect(() => { async function getUsuarios() {
         const lista = await getAllUsuarios()
@@ -21,33 +21,27 @@ export function AuthProvider ({ children }){
     
     },[])
 
-    useEffect(() => {
-        if(user){
-            async function loadBalance() {
-            const gasto = await getBalance(user.usuario,'Gasto','2023')
-            await setGasto(gasto.data.suma)
-            const ingreso = await getBalance(user.usuario,'Ingreso','2023')
-            await setIngreso(ingreso.data.suma)
-            
-        }
-        loadBalance()
-        }
-        
-    }, [user, transacciones])
-
     
     /*Este useEffect se va a ejecutar apenas cargue la pagina */
     useEffect(() => {
-        
-        async function loadTransacciones() {
-            const res = await getAllTransacciones()
-            setTransacciones(res.data)
+        if(user){
+            async function loadTransacciones() {
+                const res = await getAllTransacciones()
+                const transaccionesUser = await res.data.filter(function(transaccion){
+                    return user.usuario === transaccion.usuario
+                })
+                setTransacciones(transaccionesUser)
+            }
+            loadTransacciones()
         }
-        loadTransacciones()
-    }, [])
+        
+    },[user])
 
-    console.log(transacciones)
     
+
+    
+
+
     const loginAuth = (userData) => {
         //Logica de inicio de sesion exitoso
         setLogin(true)
@@ -62,7 +56,14 @@ export function AuthProvider ({ children }){
     }
 
     return(
-        <AuthContext.Provider value = {{ isLogin,user, loginAuth, logoutAuth,ingreso,gasto,transacciones, listaUsuarios}} >
+        <AuthContext.Provider 
+        value = {{ 
+            isLogin,user, 
+            loginAuth, 
+            logoutAuth,
+            transacciones, 
+            listaUsuarios,
+            }} >
             {children}
         </AuthContext.Provider>       
     )

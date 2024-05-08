@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import {getAllTransacciones, getGraficaGastos, getGraficaIngresos} from '../api/transacciones.api'
 import {TransaccionCard} from './TransaccionCard'
-import {Link, useParams} from 'react-router-dom'
+import { useParams} from 'react-router-dom'
 import { useAuth } from "../context/AuthProvider"
+import { Balance } from "./Balance"
 export function TransaccionesUserlist() {
     const [transacciones,setTransacciones] = useState([])
     const [graficaGastos, setGraficaGastos] = useState(null)
@@ -46,7 +47,7 @@ export function TransaccionesUserlist() {
             {isLogin && (
                 
                 <>
-                
+                <Balance/>
                 {params.tipo === "todo" && (
                     <div>
                         

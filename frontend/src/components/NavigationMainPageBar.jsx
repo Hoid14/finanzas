@@ -58,11 +58,10 @@ export function NavigationMainPageBar() {
                             <button className='bg-gray-800 hover:bg-gray-600 text-white font-bold px-3 py-2 mx-3 rounded-lg'>
                                 <Link to={`/${user.usuario}/transacciones/${"ingresos"}`}>Mostrar ingresos</Link>
                             </button>
-                            <button className='bg-gray-800 hover:bg-gray-600 text-white font-bold px-3 py-2 mx-3 rounded-lg'>
+                            {/* <button className='bg-gray-800 hover:bg-gray-600 text-white font-bold px-3 py-2 mx-3 rounded-lg'>
                                 <Link to={`/${user.usuario}/transacciones/${"estadisticas"}`}>Mostrar estadisticas</Link>
-                            </button>
+                            </button> */}
                         </div>
-                        <Balance/>
 
                     </div>
                     
